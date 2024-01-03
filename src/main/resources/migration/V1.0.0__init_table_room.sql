@@ -1,0 +1,5 @@
+CREATE TABLE room (
+    id UUID NOT NULL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    capacity INTEGER NOT NULL DEFAULT 1
+)
