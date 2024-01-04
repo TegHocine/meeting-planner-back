@@ -21,8 +21,7 @@ public class MeetingMapper {
 
 
     public MeetingDto mapToMeetingDto(Meeting meeting){
-        String message = "You got the room : " +
-                meeting.getRoom().getName();
+
         return MeetingDto.builder()
                 .date(meeting.getDate())
                 .endTime(meeting.getEndTime())
@@ -31,7 +30,6 @@ public class MeetingMapper {
                 .nbrPeople(meeting.getNbrPeople())
                 .type(meeting.getType())
                 .room(roomMapper.mapToRoomDto(meeting.getRoom()))
-                .message(message)
                 .equipmentList(meeting.getEquipmentList()
                         .stream()
                         .map(roomEquipment ->

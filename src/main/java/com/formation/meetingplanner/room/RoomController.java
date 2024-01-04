@@ -23,6 +23,7 @@ public class RoomController {
     public void addRoom(@RequestBody Room room){
         roomService.addRoom(room);
     }
+
     @PostMapping(path = "add/all")
     public void addRooms(@RequestBody List<Room> rooms){
         roomService.addRooms(rooms);
@@ -32,6 +33,5 @@ public class RoomController {
     public void deleteRoomById(@PathVariable("roomId") UUID roomId){
         roomService.deleteRoomById(roomId);
     }
-
 
 }
