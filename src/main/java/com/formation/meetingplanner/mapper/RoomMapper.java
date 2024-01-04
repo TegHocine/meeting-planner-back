@@ -3,7 +3,6 @@ package com.formation.meetingplanner.mapper;
 import com.formation.meetingplanner.dtos.RoomDto;
 import com.formation.meetingplanner.room.Room;
 import com.formation.meetingplanner.utils.Capitalize;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
@@ -33,7 +32,7 @@ public class RoomMapper {
                                         capitalize.capitalize(
                                                 roomEquipment
                                                         .getName()
-                                                        git .toString()
+                                                        .toString()
                                         )
                                 )
                                 .collect(Collectors.joining(" + "))
