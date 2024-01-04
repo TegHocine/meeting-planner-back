@@ -27,6 +27,6 @@ public class MeetingDto {
     private Integer nbrPeople;
     private MeetingType type;
     private String message;
-    private Room room;
-    private List<Equipment> equipmentList;
+    private RoomDto room;
+    private String equipmentList;
 }

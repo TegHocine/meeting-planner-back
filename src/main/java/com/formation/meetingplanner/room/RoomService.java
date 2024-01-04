@@ -1,6 +1,7 @@
 package com.formation.meetingplanner.room;
 
 import com.formation.meetingplanner.dtos.RoomDto;
+import com.formation.meetingplanner.mapper.RoomMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,34 +11,16 @@ import java.util.stream.Collectors;
 @Service
 public class RoomService {
     private final RoomRepository roomRepository;
+    private  final RoomMapper roomMapper;
 
-    private String capitalize(String string){
-        return string.toUpperCase().charAt(0) +
-                string.toLowerCase().substring(1);
-    }
-    private RoomDto mapToRoomDto(Room room){
-        return  RoomDto.builder()
-                .id(room.getId())
-                .capacity(room.getCapacity())
-                .name(room.getName())
-                .meetingList(room.getMeetingList())
-                .equipment(
-                        room.
-                        getEquipmentList()
-                        .stream()
-                        .map(roomEquipment ->
-                                capitalize(roomEquipment
-                                .getName()
-                                .toString())
-                        )
-                        .collect(Collectors.joining("+"))
-                        )
-                .build();
+    public RoomService(RoomRepository roomRepository, RoomMapper roomMapper) {
+        this.roomRepository = roomRepository;
+        this.roomMapper = roomMapper;
     }
 
     public List<RoomDto> getRooms() {
         List<Room> rooms = roomRepository.findAll();
-        return rooms.stream().map(this::mapToRoomDto).toList();
+        return rooms.stream().map((roomMapper::mapToRoomDto)).toList();
     }
 
     public void addRoom(Room room) {
@@ -52,8 +35,4 @@ public class RoomService {
         roomRepository.saveAll(rooms);
     }
 
-
-    public RoomService(RoomRepository roomRepository) {
-        this.roomRepository = roomRepository;
-    }
 }

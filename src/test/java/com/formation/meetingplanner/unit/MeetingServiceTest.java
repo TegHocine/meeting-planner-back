@@ -4,6 +4,7 @@ import com.formation.meetingplanner.RoomEquipment.RoomEquipment;
 import com.formation.meetingplanner.enums.EquipmentName;
 import com.formation.meetingplanner.enums.MeetingType;
 import com.formation.meetingplanner.equipment.EquipmentRepository;
+import com.formation.meetingplanner.mapper.MeetingMapper;
 import com.formation.meetingplanner.meeting.Meeting;
 import com.formation.meetingplanner.meeting.MeetingRepository;
 import com.formation.meetingplanner.meeting.MeetingService;
@@ -30,8 +31,9 @@ public class MeetingServiceTest {
     MeetingRepository meetingRepository;
     @Mock
     EquipmentRepository equipmentRepository;
-
-    MeetingService meetingService= new MeetingService(meetingRepository,roomRepository,equipmentRepository);
+    @Mock
+    MeetingMapper meetingMapper;
+    MeetingService meetingService= new MeetingService(meetingRepository,roomRepository,equipmentRepository,meetingMapper);
     public List<Room> createMockRooms() {
         return List.of(
                 Room.builder()

@@ -6,6 +6,7 @@ import com.formation.meetingplanner.enums.EquipmentName;
 import com.formation.meetingplanner.enums.MeetingType;
 import com.formation.meetingplanner.equipment.Equipment;
 import com.formation.meetingplanner.equipment.EquipmentRepository;
+import com.formation.meetingplanner.mapper.MeetingMapper;
 import com.formation.meetingplanner.room.Room;
 import com.formation.meetingplanner.room.RoomRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -23,11 +24,13 @@ public class MeetingService {
     private final MeetingRepository meetingRepository;
     private final RoomRepository roomRepository;
     private  final EquipmentRepository equipmentRepository;
+    private  final MeetingMapper meetingMapper;
 
-    public MeetingService(MeetingRepository meetingRepository, RoomRepository roomRepository, EquipmentRepository equipmentRepository) {
+    public MeetingService(MeetingRepository meetingRepository, RoomRepository roomRepository, EquipmentRepository equipmentRepository, MeetingMapper meetingMapper) {
         this.meetingRepository = meetingRepository;
         this.roomRepository = roomRepository;
         this.equipmentRepository = equipmentRepository;
+        this.meetingMapper = meetingMapper;
     }
 
     public List<Meeting> getMeetings() {
@@ -114,21 +117,7 @@ public class MeetingService {
         return  meeting;
     }
 
-    private MeetingDto mapToMeetingDto(Meeting meeting){
-        String message = "You got the room : " +
-                meeting.getRoom().getName();
-        return MeetingDto.builder()
-                .date(meeting.getDate())
-                .endTime(meeting.getEndTime())
-                .id(meeting.getId())
-                .startTime(meeting.getStartTime())
-                .nbrPeople(meeting.getNbrPeople())
-                .type(meeting.getType())
-                .room(meeting.getRoom())
-                .message(message)
-                .equipmentList(meeting.getEquipmentList())
-                .build();
-    }
+
 
     public MeetingDto addMeeting(Meeting newMeeting) {
         List<Room> rooms = roomRepository.findAll();
@@ -136,7 +125,7 @@ public class MeetingService {
         try {
             Meeting meeting = assignMeetingToBestRoom(rooms, newMeeting);
             meetingRepository.save(meeting);
-            return mapToMeetingDto(meeting);
+            return meetingMapper.mapToMeetingDto(meeting);
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No room available for the meeting", e);
         }
