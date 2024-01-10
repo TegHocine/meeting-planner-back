@@ -43,6 +43,7 @@ public class MeetingService {
     }
     public PaginationDto<MeetingDto> getMeetingsPagination(Integer page, Integer size) {
         Pageable pageable =  PageRequest.of(page,size);
+
         Page<Meeting> meetingPage = meetingRepository.findAll(pageable);
         List<MeetingDto> meetingDtos = meetingPage.get().map(meetingMapper::mapToMeetingDto).toList();
         return PaginationDto.<MeetingDto>builder()

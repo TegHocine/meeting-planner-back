@@ -24,7 +24,7 @@ public class MeetingController {
 
     @GetMapping(path = "pagination")
     public PaginationDto<MeetingDto> getMeetingsPagination(
-            @RequestParam(name = "page",defaultValue = "1") Integer page,
+            @RequestParam(name = "page",defaultValue = "0") Integer page,
             @RequestParam(name = "size", defaultValue = "10") Integer size){
         return meetingService.getMeetingsPagination(page,size);
     }
