@@ -1,5 +1,6 @@
 package com.formation.meetingplanner.meeting;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.formation.meetingplanner.enums.MeetingType;
 import com.formation.meetingplanner.equipment.Equipment;
@@ -32,7 +33,7 @@ public class Meeting {
     private MeetingType type;
     @ManyToOne
     @JoinColumn(name = "room_id")
-    @JsonIgnore
+    @JsonBackReference
     private Room room;
 
     @ManyToMany

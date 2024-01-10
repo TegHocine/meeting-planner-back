@@ -1,5 +1,6 @@
 package com.formation.meetingplanner.room;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.formation.meetingplanner.RoomEquipment.RoomEquipment;
 import com.formation.meetingplanner.meeting.Meeting;
 import jakarta.persistence.Entity;
@@ -23,6 +24,7 @@ public class Room {
     private String name;
     private Integer capacity;
     @OneToMany(mappedBy = "room")
+    @JsonManagedReference
     private List<Meeting> meetingList;
     @OneToMany(mappedBy = "room")
     private List<RoomEquipment> equipmentList;

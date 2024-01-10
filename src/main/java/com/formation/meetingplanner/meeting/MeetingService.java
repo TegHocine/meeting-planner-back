@@ -33,8 +33,9 @@ public class MeetingService {
         this.meetingMapper = meetingMapper;
     }
 
-    public List<Meeting> getMeetings() {
-        return meetingRepository.findAll();
+    public List<MeetingDto> getMeetings() {
+       List<Meeting> meeting = meetingRepository.findAll();
+        return meeting.stream().map(meetingMapper::mapToMeetingDto).toList();
     }
     public void deleteMeeting(UUID meetingId) {
         meetingRepository.deleteById(meetingId);

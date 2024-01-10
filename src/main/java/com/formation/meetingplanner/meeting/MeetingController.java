@@ -17,7 +17,7 @@ public class MeetingController {
     }
 
     @GetMapping
-    public List<Meeting> getMeetings(){
+    public List<MeetingDto> getMeetings(){
         return meetingService.getMeetings();
     }
 
