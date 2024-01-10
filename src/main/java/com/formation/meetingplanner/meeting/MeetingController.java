@@ -1,6 +1,7 @@
 package com.formation.meetingplanner.meeting;
 
 import com.formation.meetingplanner.dtos.MeetingDto;
+import com.formation.meetingplanner.dtos.PaginationDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,14 @@ public class MeetingController {
     public List<MeetingDto> getMeetings(){
         return meetingService.getMeetings();
     }
+
+    @GetMapping(path = "pagination")
+    public PaginationDto<MeetingDto> getMeetingsPagination(
+            @RequestParam(name = "page",defaultValue = "1") Integer page,
+            @RequestParam(name = "size", defaultValue = "10") Integer size){
+        return meetingService.getMeetingsPagination(page,size);
+    }
+
 
     @PostMapping
     public MeetingDto addMeeting(@RequestBody Meeting meeting){

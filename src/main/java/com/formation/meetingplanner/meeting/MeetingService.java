@@ -2,6 +2,7 @@ package com.formation.meetingplanner.meeting;
 
 import com.formation.meetingplanner.RoomEquipment.RoomEquipment;
 import com.formation.meetingplanner.dtos.MeetingDto;
+import com.formation.meetingplanner.dtos.PaginationDto;
 import com.formation.meetingplanner.enums.EquipmentName;
 import com.formation.meetingplanner.enums.MeetingType;
 import com.formation.meetingplanner.equipment.Equipment;
@@ -10,6 +11,9 @@ import com.formation.meetingplanner.mapper.MeetingMapper;
 import com.formation.meetingplanner.room.Room;
 import com.formation.meetingplanner.room.RoomRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -34,8 +38,20 @@ public class MeetingService {
     }
 
     public List<MeetingDto> getMeetings() {
-       List<Meeting> meeting = meetingRepository.findAll();
+        List<Meeting> meeting = meetingRepository.findAll();
         return meeting.stream().map(meetingMapper::mapToMeetingDto).toList();
+    }
+    public PaginationDto<MeetingDto> getMeetingsPagination(Integer page, Integer size) {
+        Pageable pageable =  PageRequest.of(page,size);
+        Page<Meeting> meetingPage = meetingRepository.findAll(pageable);
+        List<MeetingDto> meetingDtos = meetingPage.get().map(meetingMapper::mapToMeetingDto).toList();
+        return PaginationDto.<MeetingDto>builder()
+                .currentPage(page)
+                .totalPages(meetingPage.getTotalPages())
+                .totalItems(meetingPage.getTotalElements())
+                .hasNextPage(meetingPage.hasNext())
+                .page(meetingDtos)
+                .build();
     }
     public void deleteMeeting(UUID meetingId) {
         meetingRepository.deleteById(meetingId);
